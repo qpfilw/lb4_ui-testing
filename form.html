@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контактная форма</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error, .success {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .error {
+            color: red;
+            border: 1px solid red;
+        }
+        .success {
+            color: green;
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+    <h2>Контактная форма</h2>
+    <form id="contact-form">
+        <div class="form-group">
+            <label for="name">ФИО</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Почта</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Сообщение (необязательно)</label>
+            <textarea id="message" name="message" rows="5"></textarea>
+        </div>
+        <button type="submit" id="submit">Отправить</button>
+    </form>
+    <div id="success-message" class="success">Форма успешно отправлена</div>
+    <div id="error-message" class="error"></div>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            errorMessage.textContent = '';
+
+            if (!name) {
+                errorMessage.textContent = 'Требуется указать имя';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            if (name.length < 2) {
+                errorMessage.textContent = 'ФИО слишком короткое';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            if (!email) {
+                errorMessage.textContent = 'Требуется ввести электронную почту';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errorMessage.textContent = 'Неверный формат электронной почты';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            if (message.length > 500) {
+                errorMessage.textContent = 'Сообщение слишком длинное';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            successMessage.style.display = 'block';
+            this.reset();
+        });
+    </script>
+</body>
+</html>
