@@ -45,7 +45,7 @@ class ContactPage(BasePage):
     def get_error_message(self):
         return self.find_element(self.ERROR_MESSAGE).text
 
-# Позитивный тест
+# позитивный тест
 def test_positive_contact_form_submission(driver):
     contact_page = ContactPage(driver)
     contact_page.fill_name("Филюшина Полина")
@@ -54,7 +54,7 @@ def test_positive_contact_form_submission(driver):
     contact_page.submit_form()
     assert "Форма успешно отправлена" in contact_page.get_success_message()
 
-# Негативный тест
+# негативный тест
 def test_negative_contact_form_empty_name(driver):
     contact_page = ContactPage(driver)
     contact_page.fill_email("polly@gmail.com")
